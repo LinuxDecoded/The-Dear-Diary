@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<windows.h>
+#include<sys/stat.h>
 #include "diary.h"
 
 char pmsk[5]={'a','b','c','d','\0'};
@@ -28,6 +29,12 @@ FILE *fp;
 
 int main() {
     int ch;
+
+    struct stat stats;
+    stat("diary", &stats);
+    // Check for file existence
+    if (S_ISDIR(stats.st_mode)!=TRUE)
+        system("mkdir diary");
 
     while(1) {
         system("cls");
@@ -199,7 +206,9 @@ void login() {
     pass[i]='\0';
 
     if(fp==NULL) {
-        printf("No user data exists!!\nSignup First");
+        gotoxy(35,17);
+        printf("No user data exists!!   Signup First!!");
+        Sleep(30);
     }
     else {
         while(fread(&l,sizeof(l),1,fp)) {
@@ -207,7 +216,9 @@ void login() {
                 menu(argc, argv);
             }
             else {
+                gotoxy(35,17);
                 printf("Invalid Username or Password!!");
+                Sleep(30);
             }
         }
     }

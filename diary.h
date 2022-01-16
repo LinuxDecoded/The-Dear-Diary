@@ -115,6 +115,7 @@ void text_save() {
     window=gtk_window_new(GTK_WINDOW_POPUP);
     GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
     save_dialog=gtk_file_chooser_dialog_new("Enter Filename...",GTK_WINDOW(window),action,"Cancel",GTK_RESPONSE_CANCEL,"Choose",GTK_RESPONSE_ACCEPT,NULL);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(save_dialog), "diary");
     gtk_widget_show_all(save_dialog);
 
     gint res = gtk_dialog_run(GTK_DIALOG (save_dialog));
@@ -138,9 +139,9 @@ void button_click(GtkWidget *button, gpointer data) {
     char *btn=(char*)data;
     if(strcmp(btn, "Save")==0) {
         text_save();
-        g_print("Diary Entry Saved!!!");
-        Sleep(200);
-        exit(0);
+        //g_print("Diary Entry Saved!!!");
+        //Sleep(200);
+        //exit(0);
     }
     if(strcmp(btn, "Exit")==0) {
         g_print("Exitting..\n");
