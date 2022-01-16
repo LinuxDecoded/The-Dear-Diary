@@ -148,9 +148,10 @@ void button_click(GtkWidget *button, gpointer data) {
         exit(0);
     }
     if(strcmp(btn, "About")==0) {
-        g_print("You'll learn about me soon....\n");
-        Sleep(3000);
-        exit(0);
+        GtkWidget *msg;
+        msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"\tThe Dear Diary\t\nSimple Diary Entry Program\n\tPowered by C");
+        gtk_dialog_run(GTK_DIALOG(msg));
+        gtk_widget_destroy(msg);
     }
 }
 

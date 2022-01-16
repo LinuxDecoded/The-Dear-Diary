@@ -13,7 +13,7 @@ typedef struct{
 
 MuButton menulist[] = {
     {"File", 2, {"Save","Exit"}},
-    {"Help", 2, {"About"}}
+    {"Help", 1, {"About"}}
 };
 const int menLimit=2;
 
