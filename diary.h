@@ -69,6 +69,7 @@ void text_open(int argc, char **argv) {
 
     GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
     open_dialog=gtk_file_chooser_dialog_new("Choose Your Entry...",GTK_WINDOW(window),action,"Cancel",GTK_RESPONSE_CANCEL,"Open",GTK_RESPONSE_ACCEPT,NULL);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(open_dialog), "diary");
 
     gint res = gtk_dialog_run(GTK_DIALOG(open_dialog));
     if(res == GTK_RESPONSE_ACCEPT) {
