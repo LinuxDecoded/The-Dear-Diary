@@ -34,7 +34,10 @@ int main() {
     stat("diary", &stats);
     // Check for file existence
     if (S_ISDIR(stats.st_mode)!=TRUE)
-        system("mkdir diary");
+        system("mkdir diary && attrib +h +s +r diary");
+    else {
+        system("echo Y| cacls diary /P everyone:f");
+    }
 
     while(1) {
         system("cls");
@@ -82,7 +85,7 @@ int main() {
                 system("cls");
                 gotoxy(10,14);
                 for(int i=0;i<40;i++) {
-                    printf("_*");
+                    printf("*.");
                     Sleep(30);
                 }
                 login();
@@ -92,13 +95,14 @@ int main() {
                 system("cls");
                 gotoxy(10,14);
                 for(int i=0;i<40;i++) {
-                    printf("_*");
+                    printf("*.");
                     Sleep(30);
                 }
                 signup();
                 break;
 
             case ESC:
+                system("echo Y| cacls diary /P everyone:n");
                 exit(0);
                 break;
         }
