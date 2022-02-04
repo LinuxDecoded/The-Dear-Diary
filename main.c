@@ -218,6 +218,12 @@ void login() {
     }
     else {
         while(fread(&l,sizeof(l),1,fp)) {
+            for(int i=0; (i<15 && l.username[i] != '\0'); i++) {
+                l.username[i] -= 3;
+            }
+            for(int i=0; (i<15 && l.password[i] != '\0'); i++) {
+                l.password[i] -= 3;
+            }
             if(strcmp(user_input.username,l.username)==0 && strcmp(user_input.password, l.password)==0) {
                 menu(argc, argv);
             }
@@ -283,9 +289,15 @@ void login() {
         gotoxy(36,8);
         printf("Set UserName    :   ");
         scanf("%s", s.username);
+        for(int i=0; (i<15 && s.username[i] != '\0'); i++) {
+            s.username[i] += 3;
+        }
         gotoxy(36,10);
         printf("Set Password    :   ");
         scanf("%s", s.password);
+        for(int i=0; (i<15 && s.password[i] != '\0'); i++) {
+            s.password[i] += 3;
+        }
         gotoxy(36,12);
         printf("Press Enter to continue.........");
         if(getch()==13) {
