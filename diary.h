@@ -6,7 +6,8 @@
 void close_window() {
     gtk_main_quit();
     g_print("Exiting...\n");
-    Sleep(200);
+    system("echo Y| cacls diary /P everyone:n");
+    Sleep(300);
     exit(0);
 }
 
@@ -83,6 +84,7 @@ void text_open(int argc, char **argv) {
         msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"Failed to get file!!");
         gtk_dialog_run(GTK_DIALOG(msg));
         gtk_widget_destroy(msg);
+        system("echo Y| cacls diary /P everyone:n");
         exit(0);
     }
 
@@ -147,6 +149,7 @@ void button_click(GtkWidget *button, gpointer data) {
     if(strcmp(btn, "Exit")==0) {
         g_print("Exitting..\n");
         Sleep(200);
+        system("echo Y| cacls diary /P everyone:n");
         exit(0);
     }
     if(strcmp(btn, "About")==0) {

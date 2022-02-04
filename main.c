@@ -27,6 +27,8 @@ char password[15];
 
 FILE *fp;
 
+char user[15];
+
 int main() {
     int ch;
 
@@ -122,6 +124,8 @@ void gotoxy(int x, int y) {
 void menu(int argc, char **argv) {
     char ch;
     system("cls");
+    gotoxy(56,3);
+    printf("Hello, %s", user);
     gotoxy(35,5);
     printf("_________________________Menu_______________________\n");
     gotoxy(34,6);
@@ -143,7 +147,7 @@ void menu(int argc, char **argv) {
 
     gotoxy(36,8);
     printf("Press F1 for New Diary Entry");
-    gotoxy(36,10);
+    gotoxy(36, 10);
     printf("Press F2 for Reading Old Entry");
 
     getch();
@@ -225,6 +229,9 @@ void login() {
                 l.password[i] -= 3;
             }
             if(strcmp(user_input.username,l.username)==0 && strcmp(user_input.password, l.password)==0) {
+                for(int i=0; i<15; i++) {
+                    user[i] = l.username[i];
+                }
                 menu(argc, argv);
             }
             else {
