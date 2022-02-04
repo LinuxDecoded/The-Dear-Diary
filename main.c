@@ -20,7 +20,7 @@ void readDiary(char username[15]);
 void menu(int argc, char **argv);
 void gotoxy(int x, int y);
 
-struct data {
+struct creden {
 char username[15];
 char password[15];
 };
@@ -159,9 +159,11 @@ void menu(int argc, char **argv) {
 void login() {
 
     int i=0;
-    char user[15], pass[15], c;
+    // char user[15], pass[15], c;
+    struct creden user_input;
+    char c;
 
-    struct data l;
+    struct creden l;
 
     //Outline Box
     system("cls");
@@ -193,17 +195,17 @@ void login() {
     gotoxy(36,8);
     fp=fopen("record","rb");
     printf("Enter UserName  :   ");
-    scanf("%s",&user);
+    scanf("%s",user_input.username);
     gotoxy(36,10);
     printf("Enter Password  :   ");
 
     while((c=getch())!=13) {
-        pass[i]=c;
+        user_input.password[i]=c;
         i++;
         printf("*");
     }
 
-    pass[i]='\0';
+    user_input.password[i]='\0';
 
     if(fp==NULL) {
         gotoxy(35,17);
@@ -212,7 +214,7 @@ void login() {
     }
     else {
         while(fread(&l,sizeof(l),1,fp)) {
-            if(strcmp(user,l.username)==0 && strcmp(pass, l.password)==0) {
+            if(strcmp(user_input.username,l.username)==0 && strcmp(user_input.password, l.password)==0) {
                 menu(argc, argv);
             }
             else {
@@ -229,7 +231,7 @@ void login() {
 
  void signup(){
 
-    struct data s;
+    struct creden s;
     char msk[5],c;
     int i;
 
