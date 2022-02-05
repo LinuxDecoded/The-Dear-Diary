@@ -48,7 +48,7 @@ int main() {
     }
 
     while(1) {
-        // system("cls");
+        system("cls");
 
         //Outline Box
         gotoxy(35,5);
@@ -273,7 +273,7 @@ void login() {
     if(strcmp(msk, pmsk)==0) {
 
         system("cls");
-        fp=fopen("record","wb");
+        fp=fopen("record","ab");
 
         gotoxy(35,5);
         printf("___________________    Signup    ___________________\n");
