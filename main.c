@@ -1,5 +1,6 @@
 #include<conio.h>
 #include<stdio.h>
+#include<stdlib.h>
 #include<string.h>
 #include<windows.h>
 #include<sys/stat.h>
@@ -30,7 +31,12 @@ FILE *fp;
 char user[15];
 
 int main() {
-    int ch;
+    int ch, value;
+
+    SetConsoleTitle("The Dear Diary");
+    HWND c_window = GetConsoleWindow();
+    HMENU c_menu = GetSystemMenu(c_window, FALSE);
+    EnableMenuItem(c_menu, SC_CLOSE, MF_GRAYED);
 
     struct stat stats;
     stat("diary", &stats);
@@ -42,7 +48,7 @@ int main() {
     }
 
     while(1) {
-        system("cls");
+        // system("cls");
 
         //Outline Box
         gotoxy(35,5);
@@ -114,6 +120,7 @@ int main() {
 }
 
 //Function declaration
+
 void gotoxy(int x, int y) {
     COORD co = {0,0};
     co.X=x;

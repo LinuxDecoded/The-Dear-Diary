@@ -142,9 +142,6 @@ void button_click(GtkWidget *button, gpointer data) {
     char *btn=(char*)data;
     if(strcmp(btn, "Save")==0) {
         text_save();
-        //g_print("Diary Entry Saved!!!");
-        //Sleep(200);
-        //exit(0);
     }
     if(strcmp(btn, "Exit")==0) {
         g_print("Exitting..\n");
