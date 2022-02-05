@@ -208,7 +208,7 @@ void login() {
     printf("______________________********______________________\n");
 
     gotoxy(36,8);
-    fp=fopen("record","rb");
+    fp=fopen("diary/record","rb");
     printf("Enter UserName  :   ");
     scanf("%s",user_input.username);
     gotoxy(36,10);
@@ -273,7 +273,7 @@ void login() {
     if(strcmp(msk, pmsk)==0) {
 
         system("cls");
-        fp=fopen("record","ab");
+        fp=fopen("diary/record","ab");
 
         gotoxy(35,5);
         printf("___________________    Signup    ___________________\n");
