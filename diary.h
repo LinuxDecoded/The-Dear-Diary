@@ -6,7 +6,6 @@
 void close_window() {
     gtk_main_quit();
     g_print("Exiting...\n");
-    system("echo Y| cacls diary /P everyone:n");
     Sleep(300);
     exit(0);
 }
@@ -146,7 +145,6 @@ void button_click(GtkWidget *button, gpointer data) {
     if(strcmp(btn, "Exit")==0) {
         g_print("Exitting..\n");
         Sleep(200);
-        system("echo Y| cacls diary /P everyone:n");
         exit(0);
     }
     if(strcmp(btn, "About")==0) {

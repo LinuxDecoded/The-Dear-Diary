@@ -43,9 +43,6 @@ int main() {
     // Check for file existence
     if (S_ISDIR(stats.st_mode)!=TRUE)
         system("mkdir diary && attrib +h +s +r diary");
-    else {
-        system("echo Y| cacls diary /P everyone:f");
-    }
 
     while(1) {
         system("cls");
@@ -110,7 +107,6 @@ int main() {
                 break;
 
             case ESC:
-                system("echo Y| cacls diary /P everyone:n");
                 exit(0);
                 break;
         }
