@@ -1,6 +1,7 @@
 #include<gtk/gtk.h>
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 #include "declarations.h"
 
 void close_window() {
@@ -123,7 +124,7 @@ void text_save() {
     // gint res = gtk_dialog_run(GTK_DIALOG (save_dialog));
     // if (res == GTK_RESPONSE_ACCEPT) {
     //     GtkFileChooser *chooser = GTK_FILE_CHOOSER(save_dialog);
-        filename = "./test.txt";//gtk_file_chooser_get_filename(chooser);
+        time(&filename); //gtk_file_chooser_get_filename(chooser);
         fp=fopen(filename, "wb");
         if(!fp) {
             return;
