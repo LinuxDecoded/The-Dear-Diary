@@ -114,27 +114,27 @@ void text_save() {
     gtk_text_buffer_get_end_iter(buffer, &end);
     text=gtk_text_buffer_get_text(buffer, &start, &end, TRUE);
     
-    window=gtk_window_new(GTK_WINDOW_POPUP);
-    GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
-    save_dialog=gtk_file_chooser_dialog_new("Enter Filename...",GTK_WINDOW(window),action,"Cancel",GTK_RESPONSE_CANCEL,"Choose",GTK_RESPONSE_ACCEPT,NULL);
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(save_dialog), "diary");
-    gtk_widget_show_all(save_dialog);
+    // window=gtk_window_new(GTK_WINDOW_POPUP);
+    // GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
+    // save_dialog=gtk_file_chooser_dialog_new("Enter Filename...",GTK_WINDOW(window),action,"Cancel",GTK_RESPONSE_CANCEL,"Choose",GTK_RESPONSE_ACCEPT,NULL);
+    // gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(save_dialog), "diary");
+    // gtk_widget_show_all(save_dialog);
 
-    gint res = gtk_dialog_run(GTK_DIALOG (save_dialog));
-    if (res == GTK_RESPONSE_ACCEPT) {
-        GtkFileChooser *chooser = GTK_FILE_CHOOSER(save_dialog);
-        filename = gtk_file_chooser_get_filename(chooser);
+    // gint res = gtk_dialog_run(GTK_DIALOG (save_dialog));
+    // if (res == GTK_RESPONSE_ACCEPT) {
+    //     GtkFileChooser *chooser = GTK_FILE_CHOOSER(save_dialog);
+        filename = "./test.txt";//gtk_file_chooser_get_filename(chooser);
         fp=fopen(filename, "wb");
         if(!fp) {
             return;
         }
         fwrite(text, strlen(text), 1, fp);
         fclose(fp);
-        gtk_widget_destroy(save_dialog);
-    }
-    else {
-        gtk_widget_destroy(save_dialog);
-    }
+        // gtk_widget_destroy(save_dialog);
+    // }
+    // else {
+    //     gtk_widget_destroy(save_dialog);
+    // }
 }
 
 void button_click(GtkWidget *button, gpointer data) {
