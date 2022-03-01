@@ -4,6 +4,7 @@
 #include<string.h>
 #include<windows.h>
 #include<sys/stat.h>
+#include<time.h>
 #include "diary.h"
 
 char pmsk[5]={'a','b','c','d','\0'};
@@ -24,11 +25,12 @@ void gotoxy(int x, int y);
 struct creden {
 char username[15];
 char password[15];
+int key;
 };
 
 FILE *fp;
 
-char user[15];
+char user[15], filepath[255];
 
 int main() {
     int ch, value;
@@ -39,10 +41,12 @@ int main() {
     EnableMenuItem(c_menu, SC_CLOSE, MF_GRAYED);
 
     struct stat stats;
-    stat("diary", &stats);
+    stat("%HOMEDRIVE%\\%HOMEPATH%\\Diary", &stats);
     // Check for file existence
-    if (S_ISDIR(stats.st_mode)!=TRUE)
-        system("mkdir diary && attrib +h +s +r diary");
+    if (S_ISDIR(stats.st_mode)!=TRUE) {
+        system("mkdir %HOMEDRIVE%\\%HOMEPATH%\\Diary");
+    }
+    strcat(strcpy(filepath, getenv("Home")), "/Diary/diary.dat");
 
     while(1) {
         system("cls");
@@ -204,7 +208,7 @@ void login() {
     printf("______________________********______________________\n");
 
     gotoxy(36,8);
-    fp=fopen("diary/record","rb");
+    fp=fopen(filepath,"rb");
     printf("Enter UserName  :   ");
     scanf("%s",user_input.username);
     gotoxy(36,10);
@@ -269,7 +273,7 @@ void login() {
     if(strcmp(msk, pmsk)==0) {
 
         system("cls");
-        fp=fopen("diary/record","ab");
+        fp=fopen(filepath,"ab");
 
         gotoxy(35,5);
         printf("___________________    Signup    ___________________\n");
@@ -311,9 +315,17 @@ void login() {
         gotoxy(36,12);
         printf("Press Enter to continue.........");
         if(getch()==13) {
+            srand(time(0));
+            s.key = rand();
+            s.key *= 2;
             fwrite(&s,sizeof(s),1,fp);
             gotoxy(54,17);
-            printf("Data Saved....");
+            if(fp==NULL) {
+                printf("Error!! Could not save credentials!!");
+            }
+            else {
+                printf("Data Saved....");
+            }
         }
         else
             return;

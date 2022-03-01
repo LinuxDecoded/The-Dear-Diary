@@ -34,4 +34,6 @@ void text_save(void);
 void button_click(GtkWidget *, gpointer);
 
 gchar *filename;
-time_t filename;
+char file[255];
+struct tm *timenow;
+time_t curr_time;

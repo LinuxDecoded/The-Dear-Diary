@@ -124,8 +124,10 @@ void text_save() {
     // gint res = gtk_dialog_run(GTK_DIALOG (save_dialog));
     // if (res == GTK_RESPONSE_ACCEPT) {
     //     GtkFileChooser *chooser = GTK_FILE_CHOOSER(save_dialog);
-        time(&filename); //gtk_file_chooser_get_filename(chooser);
-        fp=fopen(filename, "wb");
+        curr_time = time(NULL); //gtk_file_chooser_get_filename(chooser);
+        timenow = localtime(&curr_time);
+        strftime(file, sizeof(file), "Diary_%d_%b_%Y-%H_%M_%S", timenow);
+        fp=fopen(file, "wb");
         if(!fp) {
             return;
         }
