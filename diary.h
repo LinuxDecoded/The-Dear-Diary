@@ -84,7 +84,6 @@ void text_open(int argc, char **argv) {
         msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"Failed to get file!!");
         gtk_dialog_run(GTK_DIALOG(msg));
         gtk_widget_destroy(msg);
-        system("echo Y| cacls diary /P everyone:n");
         exit(0);
     }
 
