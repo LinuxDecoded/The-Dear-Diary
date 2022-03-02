@@ -115,32 +115,22 @@ void text_save() {
     gtk_text_buffer_get_end_iter(buffer, &end);
     text=gtk_text_buffer_get_text(buffer, &start, &end, TRUE);
     
-    // window=gtk_window_new(GTK_WINDOW_POPUP);
-    // GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
-    // save_dialog=gtk_file_chooser_dialog_new("Enter Filename...",GTK_WINDOW(window),action,"Cancel",GTK_RESPONSE_CANCEL,"Choose",GTK_RESPONSE_ACCEPT,NULL);
-    // gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(save_dialog), "diary");
-    // gtk_widget_show_all(save_dialog);
-
-    // gint res = gtk_dialog_run(GTK_DIALOG (save_dialog));
-    // if (res == GTK_RESPONSE_ACCEPT) {
-    //     GtkFileChooser *chooser = GTK_FILE_CHOOSER(save_dialog);
-        curr_time = time(NULL); //gtk_file_chooser_get_filename(chooser);
-        timenow = localtime(&curr_time);
-        strftime(file, sizeof(file), "Diary_%d_%b_%Y-%H_%M_%S", timenow);
-        strcpy(filepath,getenv("USERPROFILE"));
-        strcat(filepath, "\\Diary\\");
-        strcat(filepath, file);
-        fp=fopen(filepath, "wb");
-        if(!fp) {
-            return;
-        }
-        fwrite(text, strlen(text), 1, fp);
-        fclose(fp);
-        // gtk_widget_destroy(save_dialog);
-    // }
-    // else {
-    //     gtk_widget_destroy(save_dialog);
-    // }
+    curr_time = time(NULL);
+    timenow = localtime(&curr_time);
+    strftime(file, sizeof(file), "Diary_%d_%b_%Y-%H_%M_%S", timenow);
+    strcpy(filepath,getenv("USERPROFILE"));
+    strcat(filepath, "\\Diary\\");
+    strcat(filepath, file);
+    fp=fopen(filepath, "wb");
+    if(!fp) {
+        return;
+    }
+    fwrite(text, strlen(text), 1, fp);
+    GtkWidget *msg;
+    msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"File Saved !!");
+    gtk_dialog_run(GTK_DIALOG(msg));
+    gtk_widget_destroy(msg);
+    fclose(fp);
 }
 
 void button_click(GtkWidget *button, gpointer data) {
