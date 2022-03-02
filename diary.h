@@ -127,7 +127,10 @@ void text_save() {
         curr_time = time(NULL); //gtk_file_chooser_get_filename(chooser);
         timenow = localtime(&curr_time);
         strftime(file, sizeof(file), "Diary_%d_%b_%Y-%H_%M_%S", timenow);
-        fp=fopen(file, "wb");
+        strcpy(filepath,getenv("USERPROFILE"));
+        strcat(filepath, "\\Diary\\");
+        strcat(filepath, file);
+        fp=fopen(filepath, "wb");
         if(!fp) {
             return;
         }

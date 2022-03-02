@@ -41,12 +41,12 @@ int main() {
     EnableMenuItem(c_menu, SC_CLOSE, MF_GRAYED);
 
     struct stat stats;
-    stat("%HOMEDRIVE%\\%HOMEPATH%\\Diary", &stats);
+    stat("%USERPROFILE%\\Diary", &stats);
     // Check for file existence
     if (S_ISDIR(stats.st_mode)!=TRUE) {
-        system("mkdir %HOMEDRIVE%\\%HOMEPATH%\\Diary");
+        system("mkdir %USERPROFILE%\\Diary");
     }
-    strcat(strcpy(filepath, getenv("Home")), "/Diary/diary.dat");
+    strcat(strcpy(filepath, getenv("USERPROFILE")), "\\Diary\\diary.dat");
 
     while(1) {
         system("cls");

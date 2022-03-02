@@ -1,5 +1,6 @@
 #include<gtk/gtk.h>
 #include<stdio.h>
+#include<string.h>
 
 #ifndef _MAX_FILE_SIZE
 #define _MAX_FILE_SIZE 2048000  //4 MB 
@@ -35,5 +36,6 @@ void button_click(GtkWidget *, gpointer);
 
 gchar *filename;
 char file[255];
+char filepath[255];
 struct tm *timenow;
 time_t curr_time;
