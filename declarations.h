@@ -1,6 +1,5 @@
 #include<gtk/gtk.h>
 #include<stdio.h>
-#include<string.h>
 
 #ifndef _MAX_FILE_SIZE
 #define _MAX_FILE_SIZE 2048000  //4 MB 

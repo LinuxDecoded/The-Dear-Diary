@@ -18,7 +18,6 @@ char **argv;
 
 void signup(void);
 void login(void);
-void readDiary(char username[15]);
 void menu(int argc, char **argv);
 void gotoxy(int x, int y);
 
@@ -130,6 +129,7 @@ void gotoxy(int x, int y) {
 
 void menu(int argc, char **argv) {
     char ch;
+    
     system("cls");
     gotoxy(56,3);
     printf("Hello, %s", user);
