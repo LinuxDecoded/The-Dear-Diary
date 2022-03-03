@@ -22,7 +22,8 @@ int key;
 
 FILE *fp;
 
-char user[15], filepath[255];
+char user[15];
+char filepath[255];
 
 //Function declaration
 
