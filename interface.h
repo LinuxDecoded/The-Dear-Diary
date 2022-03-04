@@ -24,7 +24,8 @@ int key;
 
 FILE *fp;
 
-char filepath[255] ,user[15];
+char user[15];
+char filepath[255];
 
 //GUI part starts here
 void close_window() {
