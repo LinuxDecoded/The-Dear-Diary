@@ -18,6 +18,15 @@ MuButton menulist[] = {
 const int menLimit=2;
 
 void diary_interface(void);
+void close_window();
+void text_open(int argc, char **argv);
+void text_save();
+void button_click(GtkWidget *button, gpointer data);
+void diary(int argc, char **argv);
+void gotoxy(int x, int y);
+void menu(int argc, char **argv);
+void login();
+void signup();
 
 GtkWidget *window;
 GtkWidget *vbox;

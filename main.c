@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<windows.h>
-#include "console.h"
+#include "interface.h"
 
 int main() {
     int ch, value;
