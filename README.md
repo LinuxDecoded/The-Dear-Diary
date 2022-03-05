@@ -1,8 +1,7 @@
 # The-Dear-Diary
 
-## This is a Console-GUI mixed application for managing diary entry of a User written in C language...
-
----
+## This is a Console-GUI mixed application for managing diary entries of multiple users written in C language 
+## GTK library used for graphical user interface
 
 ## License
-This project is licensed under the [MIT LICENSE](LICENSE).
+Licensed under the [MIT LICENSE](LICENSE).
