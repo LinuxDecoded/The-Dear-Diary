@@ -27,6 +27,22 @@ FILE *fp;
 char user[15];
 char filepath[255];
 
+void check_usr_folder() {
+    strcpy(filepath,getenv("USERPROFILE"));
+    strcat(filepath, "\\Diary\\");
+    strcat(filepath, user);
+    struct stat stats;
+
+    stat(filepath, &stats);
+    // Check for user folder existence
+    if (S_ISDIR(stats.st_mode)!=TRUE) {
+        char command[255];
+        strcpy(command, "mkdir ");
+        strcat(command, filepath);
+        system(command);
+    }
+}
+
 //GUI part starts here
 void close_window() {
     gtk_main_quit();
@@ -71,7 +87,7 @@ void diary_interface() {
 
 void text_open(int argc, char **argv) {
     gtk_init(&argc, &argv);
-
+    g_object_set(gtk_settings_get_default(), "gtk-application-prefer-dark-theme", TRUE, NULL);
     window=gtk_window_new(GTK_WINDOW_TOPLEVEL);
     vbox=gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_window_set_title(GTK_WINDOW(window), "The Dear Diary");
@@ -92,7 +108,7 @@ void text_open(int argc, char **argv) {
 
     GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
     open_dialog=gtk_file_chooser_dialog_new("Choose Your Entry...",GTK_WINDOW(window),action,"Cancel",GTK_RESPONSE_CANCEL,"Open",GTK_RESPONSE_ACCEPT,NULL);
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(open_dialog), "diary");
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(open_dialog), filepath);
 
     gint res = gtk_dialog_run(GTK_DIALOG(open_dialog));
     if(res == GTK_RESPONSE_ACCEPT) {
@@ -106,15 +122,15 @@ void text_open(int argc, char **argv) {
         msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"Failed to get file!!");
         gtk_dialog_run(GTK_DIALOG(msg));
         gtk_widget_destroy(msg);
-        exit(0);
+        gtk_widget_destroy(open_dialog);
+        menu(argc, argv);
     }
-
+    
     buffer=gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
     if(! g_file_get_contents(filename, &contents, &nBytesInBuff, &error)) {
         printf(error->message);
         g_clear_error(&error);
-        g_free(filename);
-        exit(1);
+        menu(argc, argv);
     }
 
     gtk_text_buffer_set_text(buffer, contents, -1);
@@ -139,19 +155,6 @@ void text_save() {
     curr_time = time(NULL);
     timenow = localtime(&curr_time);
     strftime(file, sizeof(file), "Diary_%d_%b_%Y-%H_%M_%S", timenow);
-    strcpy(filepath,getenv("USERPROFILE"));
-    strcat(filepath, "\\Diary\\");
-    strcat(filepath, user);
-    struct stat stats;
-
-    stat(filepath, &stats);
-    // Check for user folder existence
-    if (S_ISDIR(stats.st_mode)!=TRUE) {
-        char command[255];
-        strcpy(command, "mkdir ");
-        strcat(command, filepath);
-        system(command);
-    }
 
     strcat(filepath, "\\");
     strcat(filepath, file);
@@ -173,9 +176,8 @@ void button_click(GtkWidget *button, gpointer data) {
         text_save();
     }
     if(strcmp(btn, "Exit")==0) {
-        g_print("Exitting..\n");
-        Sleep(200);
-        exit(0);
+        gtk_widget_destroy(window);
+        menu(argc, argv);
     }
     if(strcmp(btn, "About")==0) {
         GtkWidget *msg;
@@ -187,6 +189,7 @@ void button_click(GtkWidget *button, gpointer data) {
 
 void diary(int argc, char **argv) {
     gtk_init(&argc, &argv);
+    g_object_set(gtk_settings_get_default(), "gtk-application-prefer-dark-theme", TRUE, NULL);
     diary_interface();
     gtk_widget_show_all(window);
     gtk_main();
@@ -230,22 +233,25 @@ void menu(int argc, char **argv) {
     gotoxy(36, 9);
     printf("Press F2 for Reading Old Entry");
     gotoxy(36, 11);
-    printf("Press ESC to exit");
+    printf("Press ESC to Logout");
 
     getch();
     ch=getch();
     switch(ch) {
         case F1:
+            check_usr_folder();
             system("cls");
             printf("Loading Diary Window, be patient ...");
             diary(argc, argv);
             break;
         case F2:
+            check_usr_folder();
             system("cls");
+            printf("Loading File Chooser, be patient ...");
             text_open(argc, argv);
             break;
         case ESC:
-            exit(0);
+            start_screen();
             break;
     }
 }
@@ -418,3 +424,82 @@ void login() {
         return;
     }
  }
+
+void start_screen() {
+    struct stat stats;
+    stat("%USERPROFILE%\\Diary", &stats);
+    // Check for file existence
+    if (S_ISDIR(stats.st_mode)!=TRUE) {
+        system("mkdir %USERPROFILE%\\Diary");
+    }
+    strcat(strcpy(filepath, getenv("USERPROFILE")), "\\Diary\\diary.dat");
+
+    int ch;
+    while(1) {
+        system("cls");
+
+        //Outline Box
+        gotoxy(35,5);
+        printf("___________________The Dear Diary___________________\n");
+        gotoxy(34,6);
+        printf("|                                                    |");
+        gotoxy(34,7);
+        printf("|                                                    |");
+        gotoxy(34,8);
+        printf("|                                                    |");
+        gotoxy(34,9);
+        printf("|                                                    |");
+        gotoxy(34,10);
+        printf("|                                                    |");
+        gotoxy(34,11);
+        printf("|                                                    |");
+        gotoxy(34,12);
+        printf("|                                                    |");
+        gotoxy(34,13);
+        printf("|                                                    |");
+        gotoxy(34,14);
+        printf("|                                                    |");
+        gotoxy(34,15);
+        printf("|                                                    |");
+        gotoxy(35,15);
+        printf("______________________********______________________\n");
+
+        //Text inside Box
+        gotoxy(46,7);
+        printf("...........Welcome...........");
+        gotoxy(36,9);
+        printf("Press F1 For Login");
+        gotoxy(36,11);
+        printf("Press F2 For New Registration/Reset Credentials");
+        gotoxy(36,13);
+        printf("Press ESC For Exit");
+
+        getch();
+        ch=getch();
+        switch(ch){
+            case F1:
+                system("cls");
+                gotoxy(10,14);
+                for(int i=0;i<40;i++) {
+                    printf("*.");
+                    Sleep(30);
+                }
+                login();
+                break;
+
+            case F2:
+                system("cls");
+                gotoxy(10,14);
+                for(int i=0;i<40;i++) {
+                    printf("*.");
+                    Sleep(30);
+                }
+                signup();
+                break;
+
+            case ESC:
+                exit(0);
+                break;
+        }
+    }
+}

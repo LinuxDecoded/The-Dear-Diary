@@ -17,6 +17,7 @@ MuButton menulist[] = {
 };
 const int menLimit=2;
 
+void check_usr_folder();
 void diary_interface(void);
 void close_window();
 void text_open(int argc, char **argv);
@@ -27,6 +28,7 @@ void gotoxy(int x, int y);
 void menu(int argc, char **argv);
 void login();
 void signup();
+void start_screen();
 
 GtkWidget *window;
 GtkWidget *vbox;
