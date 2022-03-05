@@ -119,7 +119,7 @@ void text_open(int argc, char **argv) {
 
     if(filename==NULL) {
         GtkWidget *msg;
-        msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"Failed to get file!!");
+        msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"No Diary entries selected !!");
         gtk_dialog_run(GTK_DIALOG(msg));
         gtk_widget_destroy(msg);
         gtk_widget_destroy(open_dialog);
@@ -164,7 +164,7 @@ void text_save() {
     }
     fwrite(text, strlen(text), 1, fp);
     GtkWidget *msg;
-    msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"File Saved !!");
+    msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"Diary Entry Saved");
     gtk_dialog_run(GTK_DIALOG(msg));
     gtk_widget_destroy(msg);
     fclose(fp);
@@ -181,7 +181,7 @@ void button_click(GtkWidget *button, gpointer data) {
     }
     if(strcmp(btn, "About")==0) {
         GtkWidget *msg;
-        msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"\tThe Dear Diary\t\nSimple Diary Entry Program\n\tPowered by C");
+        msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"\tThe Dear Diary\t\n\tMade with ❤️\n\tby Ajay Sharma and team");
         gtk_dialog_run(GTK_DIALOG(msg));
         gtk_widget_destroy(msg);
     }
