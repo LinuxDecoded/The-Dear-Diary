@@ -7,25 +7,26 @@
 #include<gtk/gtk.h>
 #include "declarations.h"
 
-char pmsk[5]={'a','b','c','d','\0'};
+// char pmsk[5]={'a','b','c','d','\0'};
 
-#define ESC 27
-#define F1 59
-#define F2 60
+// #define ESC 27
+// #define F1 59
+// #define F2 60
 
-int argc;
-char **argv;
+// int argc;
+// char **argv;
 
-struct creden {
-char username[15];
-char password[15];
-int key;
-};
+// struct creden {
+// char username[15];
+// char password[15];
+// int key;
+// };
 
-FILE *fp;
+// FILE *fp, *fp_tmp;
 
-char user[15];
-char filepath[255];
+// char user[15];
+// char filepath[255];
+// int encrypt_key;
 
 void check_usr_folder() {
     strcpy(filepath,getenv("USERPROFILE"));
@@ -43,9 +44,68 @@ void check_usr_folder() {
     }
 }
 
+// void encrypt(char filepath[]) {
+//     fp = fopen(filepath, "rb");
+//     if(fp == NULL)
+//         return;
+//     fp_tmp = fopen("temp.txt", "wb");
+//     if(fp_tmp == NULL)
+//         return;
+//     ch = fgetc(fp);
+//     while(ch != EOF)
+//     {
+//         ch = ch+encrypt_key;
+//         fputc(ch, fp_tmp);
+//         ch = fgetc(fp);
+//     }
+//     fclose(fp);
+//     fclose(fp_tmp);
+//     fp = fopen(filepath, "wb");
+//     if(fp == NULL)
+//         return;
+//     fp_tmp = fopen("temp.txt", "rb");
+//     if(fp_tmp == NULL)
+//         return;
+//     ch = fgetc(fp_tmp);
+//     while(ch != EOF)
+//     {
+//         ch = fputc(ch, fp);
+//         ch = fgetc(fp_tmp);
+//     }
+//     fclose(fp);
+//     fclose(fp_tmp);
+// }
+
+// void decrypt(gchar *filename) {
+//     fp = fopen(filename, "wb");
+//     if(fp == NULL)
+//         return;
+//     fp_tmp = fopen("temp.txt", "rb");
+//     if(fp_tmp == NULL)
+//         return;
+//     ch = fgetc(fp_tmp);
+//     while(ch != EOF)
+//     {
+//         ch = ch-encrypt_key;
+//         fputc(ch, fp);
+//         ch = fgetc(fp_tmp);
+//     }
+//     fclose(fp);
+//     fclose(fp_tmp);
+// }
+
 //GUI part starts here
 void close_window() {
     gtk_main_quit();
+    menu(argc, argv);
+}
+
+void no_diary_msg() {
+    GtkWidget *msg;
+    msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"No Diary entries selected !!");
+    gtk_dialog_run(GTK_DIALOG(msg));
+    gtk_widget_destroy(msg);
+    gtk_widget_destroy(open_dialog);
     menu(argc, argv);
 }
 
@@ -116,15 +176,21 @@ void text_open(int argc, char **argv) {
         filename=gtk_file_chooser_get_filename(chooser);
         gtk_widget_destroy(open_dialog);
     }
+    else {
+        no_diary_msg();
+    }
 
     if(filename==NULL) {
-        GtkWidget *msg;
-        msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"No Diary entries selected !!");
-        gtk_dialog_run(GTK_DIALOG(msg));
-        gtk_widget_destroy(msg);
-        gtk_widget_destroy(open_dialog);
-        menu(argc, argv);
+        no_diary_msg();
+        // GtkWidget *msg;
+        // msg=gtk_message_dialog_new(GTK_WINDOW(window),GTK_DIALOG_MODAL,GTK_MESSAGE_ERROR,GTK_BUTTONS_OK,"No Diary entries selected !!");
+        // gtk_dialog_run(GTK_DIALOG(msg));
+        // gtk_widget_destroy(msg);
+        // gtk_widget_destroy(open_dialog);
+        // menu(argc, argv);
     }
+
+    // decrypt(filename);
     
     buffer=gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
     if(! g_file_get_contents(filename, &contents, &nBytesInBuff, &error)) {
@@ -174,6 +240,7 @@ void button_click(GtkWidget *button, gpointer data) {
     char *btn=(char*)data;
     if(strcmp(btn, "Save")==0) {
         text_save();
+        // encrypt(filepath);
     }
     if(strcmp(btn, "Exit")==0) {
         gtk_widget_destroy(window);
@@ -204,7 +271,6 @@ void gotoxy(int x, int y) {
 }
 
 void menu(int argc, char **argv) {
-    char ch;
     
     system("cls");
     gotoxy(56,3);
@@ -324,6 +390,7 @@ void login() {
                 for(int i=0; i<15; i++) {
                     user[i] = l.username[i];
                 }
+                encrypt_key = l.key / 2;
                 menu(argc, argv);
             }
             else {
