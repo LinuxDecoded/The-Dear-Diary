@@ -23,6 +23,54 @@ void check_usr_folder() {
     }
 }
 
+void encrypt(char filepath[]) {
+    char command[255];
+    char tmp[255];
+    strcpy(tmp, getenv("TMP"));
+    strcat(tmp, "\\");
+    strcat(tmp, "Diary_tmp");
+    
+    fp=fopen(filepath, "rb");
+    if(fp==NULL){
+        printf("File pointer error!!");
+        return;
+    }
+    fp_tmp = fopen(tmp, "wb");
+    if(fp_tmp==NULL){
+        printf("Tmp File pointer error!!");
+        return;
+    }
+    ch = fgetc(fp);
+    while(ch!=EOF) {
+        ch = ch+encrypt_key;
+        fputc(ch, fp_tmp);
+        ch=fgetc(fp);
+    }
+    fclose(fp);
+    fclose(fp_tmp);
+
+    fp=fopen(filepath, "wb");
+    if(fp==NULL){
+        printf("File pointer error!!");
+        return;
+    }
+    fp_tmp=fopen(tmp, "rb");
+    if(fp_tmp==NULL){
+        printf("Tmp File pointer error!!");
+        return;
+    }
+    ch=fgetc(fp_tmp);
+    while(ch!=EOF) {
+        ch = fputc(ch, fp);
+        ch = fgetc(fp_tmp);
+    }
+    fclose(fp);
+    fclose(fp_tmp);
+    strcpy(command, "del ");
+    strcat(command, tmp);
+    system(command);
+}
+
 
 //GUI part starts here
 void close_window() {
@@ -120,6 +168,10 @@ void text_open(int argc, char **argv) {
         g_clear_error(&error);
         menu(argc, argv);
     }
+    int n = strlen(contents);
+    for(int i=0; i<n; i++) {
+        contents[i] -= encrypt_key;
+    }
 
     gtk_text_buffer_set_text(buffer, contents, -1);
     g_free(filename);
@@ -162,6 +214,7 @@ void button_click(GtkWidget *button, gpointer data) {
     char *btn=(char*)data;
     if(strcmp(btn, "Save")==0) {
         text_save();
+        encrypt(filepath);
     }
     if(strcmp(btn, "Exit")==0) {
         gtk_widget_destroy(window);
@@ -310,6 +363,7 @@ void login() {
             if(strcmp(user_input.username,l.username)==0 && strcmp(user_input.password, l.password)==0) {
                 for(int i=0; i<15; i++) {
                     user[i] = l.username[i];
+                    encrypt_key = l.key;
                 }
                 menu(argc, argv);
             }
@@ -384,6 +438,8 @@ void login() {
         for(int i=0; (i<15 && s.password[i] != '\0'); i++) {
             s.password[i] += 3;
         }
+        srand(time(NULL));
+        s.key = rand();
         gotoxy(36,12);
         printf("Press Enter to continue.........");
         if(getch()==13) {

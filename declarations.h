@@ -19,6 +19,7 @@ MuButton menulist[] = {
 const int menLimit=2;
 
 void check_usr_folder();
+void encrypt(char filepath[]);
 void diary_interface(void);
 void no_diary_msg();
 void close_window();
@@ -52,6 +53,7 @@ char filepath[255];
 struct tm *timenow;
 time_t curr_time;
 char user[15];
+int encrypt_key;
 char ch;
 
 char pmsk[5]={'a','b','c','d','\0'};
@@ -66,7 +68,8 @@ char **argv;
 struct creden {
 char username[15];
 char password[15];
+int key;
 };
 
-FILE *fp;
+FILE *fp, *fp_tmp;
 
