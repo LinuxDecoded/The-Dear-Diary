@@ -10,6 +10,8 @@ int main() {
     SetConsoleTitle("The Dear Diary");
 
     start_screen();
+
+    
     
     return 0;
 }
