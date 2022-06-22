@@ -1,17 +1,17 @@
-#include<conio.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<windows.h>
-#include "interface.h"
+// #include<conio.h>
+// #include<stdio.h>
+// #include<stdlib.h>
+// #include<string.h>
+// #include<windows.h>
+// #include "interface.h"
 
-int main() {
+// int main() {
 
-    SetConsoleTitle("The Dear Diary");
+//     SetConsoleTitle("The Dear Diary");
 
-    start_screen();
+//     start_screen();
 
     
     
-    return 0;
-}
+//     return 0;
+// }
