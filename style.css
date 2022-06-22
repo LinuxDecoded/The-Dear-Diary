@@ -1,0 +1,26 @@
+window{
+	background: linear-gradient(to right, #fc5c7d, #6a82fb);
+}
+
+label{
+	color: antiquewhite;
+	font-size: 20px;
+}
+
+#title{
+	font-size: 32px;
+}
+
+entry{
+	margin: 0 50px 0 50px;
+	background-color: black;
+	border-radius: 20px;
+}
+
+#submit{
+	background: black;
+	color: antiquewhite;
+	border-radius: 10px;
+	margin: 0px 220px 0 220px;
+	/* padding-top: -20px; */
+}
